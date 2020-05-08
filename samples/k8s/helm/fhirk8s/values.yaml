@@ -1,0 +1,91 @@
+# Default values for fhirk8s.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+fhir:
+  version: r4
+  tag: latest
+  httpPort: 8080
+  httpsPort: 8443
+  certificatePassword: mycertificatepassword
+  
+mssql:
+  servicePort: 1433
+  pvcClaim:
+    size: 8Gi
+
+env: 
+  SAPASSWORD: MyStrongPa$$w0rd!
+  ACCEPT_EULA: "Y"
+  FHIRServer__Security__Enabled: "true"
+  FHIRServer__Security__Authentication__Audience: api://f31884a0-2727-406e-b820-4baa42ed2cc5
+  FHIRServer__Security__Authentication__Authority: https://login.microsoftonline.com/4fd354cb-e69d-49f6-b954-daf93d5cef95
+  DataStore: SqlServer
+  SqlServer__AllowDatabaseCreation: "true"
+  SqlServer__Initialize: "true"
+  ApplicationInsights__InstrumentationKey: da38529a-fe53-4937-ae41-e31b0ee21833
+
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+services:
+  - fhir:
+    port: 8080
+  - mssql:
+    port: 1433
+
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths: []
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
