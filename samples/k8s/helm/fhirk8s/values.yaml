@@ -9,7 +9,7 @@ fhir:
   tag: latest
   httpPort: 8080
   httpsPort: 8443
-  certificatePassword: mycertificatepassword
+  certificatePassword: <PASSWORD>
   
 mssql:
   servicePort: 1433
@@ -17,15 +17,15 @@ mssql:
     size: 8Gi
 
 env: 
-  SAPASSWORD: MyStrongPa$$w0rd!
+  SAPASSWORD: <SAPASSWORD>
   ACCEPT_EULA: "Y"
-  FHIRServer__Security__Enabled: "true"
-  FHIRServer__Security__Authentication__Audience: api://f31884a0-2727-406e-b820-4baa42ed2cc5
-  FHIRServer__Security__Authentication__Authority: https://login.microsoftonline.com/4fd354cb-e69d-49f6-b954-daf93d5cef95
+  FHIRServer__Security__Enabled: <TRUE or FALSE>
+  FHIRServer__Security__Authentication__Audience: <AUDIENCE>
+  FHIRServer__Security__Authentication__Authority: <AUTHORITY>
   DataStore: SqlServer
   SqlServer__AllowDatabaseCreation: "true"
   SqlServer__Initialize: "true"
-  ApplicationInsights__InstrumentationKey: da38529a-fe53-4937-ae41-e31b0ee21833
+  ApplicationInsights__InstrumentationKey: <APPLICATIONINSIGHTS KEY>
 
 
 imagePullSecrets: []
