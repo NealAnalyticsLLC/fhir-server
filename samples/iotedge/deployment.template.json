@@ -98,7 +98,7 @@
                             }
                         },
                         "settings": {
-                            "image": "healthplatformregistry.azurecr.io/r4_fhir-server:latest",
+                            "image": "healthplatformregistry.azurecr.io/${FHIR_VERSION}_fhir-server:latest",
                             "createOptions": {
                                 "ExposedPorts": {
                                     "8080/tcp": {},
