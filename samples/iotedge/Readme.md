@@ -7,7 +7,7 @@ This sample has been created to enable edge-based scenarios for running FHIR Ser
 - Audit logging with Azure Application Insights
 - HHTP/HTTPS protocols (you must provide your own certificate)
 - SQL Server backend
-- Persistant data storage on Azure Stack Edge
+- Persistent data storage on Azure Stack Edge
 
 
 ## Prerequisistes
@@ -15,6 +15,7 @@ This sample has been created to enable edge-based scenarios for running FHIR Ser
     - Device must be activated and connected to IoT Hub. See the link [here](https://docs.microsoft.com/en-us/azure/databox-online/azure-stack-edge-deploy-prep) for instructions to order an Azure Stack Edge and configure it.
 - [Visual Studio Code](https://code.visualstudio.com/download)
 - [Iot Tools Extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools)
+- Certificate for HHTPS functionality (you can generate a development certificate by following instructions located [here](https://docs.microsoft.com/en-us/aspnet/core/security/docker-https?view=aspnetcore-3.1#running-pre-built-container-images-with-https))
 
 
 ## Step 1: Define Your Environment
@@ -66,11 +67,11 @@ After specifying your environment, you will need to deploy to your Azure Stack E
 
     ![Select Device](./images/select_device.png)
 
-1. Confirm that the deployment was successful
+1. Confirm the deployment was successful
 
     ![Deployment Successful](./images/deploy_success.PNG)
 
-    > **Note:** it may take some time for the device to report the containers are running as it will need to pull the docker images from the container registry prior to being operational
+    > **Note:** It may take some time for the device to report the containers are running as it will need to pull the docker images from the container registry prior to being operational
 
 
 ## Step 3: Test your Deployment
