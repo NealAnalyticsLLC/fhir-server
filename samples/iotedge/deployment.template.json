@@ -9,13 +9,7 @@
                     "settings": {
                         "minDockerVersion": "v1.25",
                         "loggingOptions": "",
-                        "registryCredentials": {
-                            "docker": {
-                                "username": "$CONTAINER_REGISTRY_USERNAME",
-                                "password": "$CONTAINER_REGISTRY_PASSWORD",
-                                "address": "$CONTAINER_REGISTRY_LOGIN_SERVER"
-                            }
-                        }
+                        "registryCredentials": {}
                     }
                 },
                 "systemModules": {
@@ -152,6 +146,7 @@
                                         "/opt/mssql-tools/bin/sqlcmd",
                                         "-U sa -P ${SAPASSWORD} -Q 'SELECT * FROM INFORMATION_SCHEMA.TABLES'"
                                     ],
+                                    "StartPeriod": 300000000000,
                                     "Interval": 10000000000,
                                     "Timeout": 10000000000,
                                     "Retries": 6
@@ -160,7 +155,7 @@
                                     "Mounts": [
                                         {
                                             "Target": "/var/opt/mssql",
-                                            "Source": "ewsqlVolume",
+                                            "Source": "sqlVolume",
                                             "Type": "volume"
                                         }
                                     ],
