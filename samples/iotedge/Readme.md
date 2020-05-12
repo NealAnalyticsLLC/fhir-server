@@ -68,7 +68,7 @@ After specifying your environment, you will need to deploy to your Azure Stack E
 
 1. Confirm that the deployment was successful
 
-    ![Deployment Successful](./images/deploy_success.png)
+    ![Deployment Successful](./images/deploy_success.PNG)
 
     > **Note:** it may take some time for the device to report the containers are running as it will need to pull the docker images from the container registry prior to being operational
 
