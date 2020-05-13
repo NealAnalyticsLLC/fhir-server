@@ -47,8 +47,9 @@ This sample illustrates how to run a FHIR Server instance with SQL Server on Azu
     See this [Troubleshooting Guide](https://docs.microsoft.com/en-us/azure-stack/user/azure-stack-kubernetes-aks-engine-troubleshoot?view=azs-2002) for troubleshooting common scenarios on Azure Stack Hub
 
 
-## Step 2: Manifest Deployment
+## Step 2: Helm Chart Deployment
 
+### Environment Definition
 - SSH into one of your master nodes
 
 - Clone this repo on the master
@@ -59,23 +60,38 @@ This sample illustrates how to run a FHIR Server instance with SQL Server on Azu
     - These variables will be used to generate a secret to manage your deployment environment variables
     - Variables to update:
     
-        |Variable:|Description:|
-        |---------|------------|
-        |**SAPASSWORD**| Password to use for SQL Server service account|
-        |**SqlServer__ConnectionString**| Connection string for FHIR api to use to connect to backend. NOTE: The password in this connection string must match the SAPASSWORD above|
-        |**ApplicationInsights__InstrumentationKey**| This is the instrumentation key used for audit logging|
+        |Environment Variable|Description|
+        |--------------------|-----------|
+        |FHIR_VERSION | Version of FHIR Server to Run (ex. R4, R5, STU3)|
+        |FHIRServer__Security__Authentication__Audience| Audience from your service princpal registration in Azure Active Directory|
+        |FHIRServer__Security__Authentication__Authority| Authority from your client app in Azure Active Directory|
+        |SAPASSWORD| Password to use for SQL Server service account
+        |ApplicationInsights__InstrumentationKey| Instrumentation key for Azure Application Insights to send audit logs|
+        |ASPNETCORE_Kestrel__Certificates__Default__Path| Fully qualified path to your certificate|
+        |ASPNETCORE_Kestrel__Certificates__Default__Password| Password required to use your certificate|
 
 
-- Run the create_namespace.sh file here to create the namcespace and populate with secrets
+### Authentication Setup
+
+For authentication to be enabled, the following will need to be setup in you Azure environment 
+
+- Review the FHIR [Roles.md](https://github.com/microsoft/fhir-server/blob/master/docs/Roles.md) documentation to configure and associate roles in Azure 
+- [Register the Azure Active Directory apps for Azure API for FHIR](https://docs.microsoft.com/en-us/azure/healthcare-apis/fhir-app-registration)
+- [Register a confidential client application in Azure Active Directory](https://docs.microsoft.com/en-us/azure/healthcare-apis/register-resource-azure-ad-client-app).  You also have the option to register by [Public](https://docs.microsoft.com/en-us/azure/healthcare-apis/register-public-azure-ad-client-app) or [Service](https://docs.microsoft.com/en-us/azure/healthcare-apis/register-service-azure-ad-client-app) client.
+- [Add app roles in your application and receive them in the token](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-add-app-roles-in-azure-ad-apps)
+
+
+### AKS Engine Helm Chart Deployment
+
+- Run the initialize_namespace.sh file here to create the namespace and populate with secrets
     ```
-    $ ./create_namespace.sh
+    $ ./initialize_namespace.sh
     ```
 
-- Execute the below command to deploy the FHIR Server and SQL Server to the AKS cluster
-
-    ```
-    $ kubectl apply -f ./deployment_manifest.yaml
-    ```
+- When prompted, provide the requested information
+    - Desired namespace name
+    - Absolute path to certificate file
+    - Desired name for Helm release
 
 - Wait for the deployment to complete
     - NOTE: the deployment will take some time as it needs to pull the container images and run the initial configuration.
@@ -87,4 +103,4 @@ This sample illustrates how to run a FHIR Server instance with SQL Server on Azu
     $ kubectl get services -namespace fhir-server
     ```    
 
-- Test your service using Postman
+- Follow the guide [here](https://docs.microsoft.com/en-us/azure/healthcare-apis/access-fhir-postman-tutorial) to get a token and test your deployment using Postman
