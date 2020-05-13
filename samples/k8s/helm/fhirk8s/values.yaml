@@ -9,7 +9,7 @@ fhir:
   tag: latest
   httpPort: 8080
   httpsPort: 8443
-  certificatePassword: <PASSWORD>
+  certificateFileName: mycertificatename.pfx
   
 mssql:
   servicePort: 1433
