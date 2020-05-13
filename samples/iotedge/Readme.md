@@ -11,11 +11,22 @@ This sample has been created to enable edge-based scenarios for running FHIR Ser
 
 
 ## Prerequisistes
+
+### Tools and Devices
 - [Azure Stack Edge](https://azure.microsoft.com/en-us/products/azure-stack/edge/)
     - Device must be activated and connected to IoT Hub. See the link [here](https://docs.microsoft.com/en-us/azure/databox-online/azure-stack-edge-deploy-prep) for instructions to order an Azure Stack Edge and configure it.
 - [Visual Studio Code](https://code.visualstudio.com/download)
 - [Iot Tools Extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools)
-- Certificate for HHTPS functionality (you can generate a development certificate by following instructions located [here](https://docs.microsoft.com/en-us/aspnet/core/security/docker-https?view=aspnetcore-3.1#running-pre-built-container-images-with-https))
+- Certificate for HTTPS functionality (you can generate a development certificate by following instructions located [here](https://docs.microsoft.com/en-us/aspnet/core/security/docker-https?view=aspnetcore-3.1#running-pre-built-container-images-with-https))
+
+### Authentication
+
+For authentication to be enabled, the following will need to be setup in you Azure environment 
+
+- Review the FHIR Roles.md documentation to configure and associate roles in Azure .\fhir-server\docs\Roles.md
+- [Register the Azure Active Directory apps for Azure API for FHIR](https://docs.microsoft.com/en-us/azure/healthcare-apis/fhir-app-registration)
+- [Register a confidential client application in Azure Active Directory](https://docs.microsoft.com/en-us/azure/healthcare-apis/register-resource-azure-ad-client-app).  You also have the option to register by [Public](https://docs.microsoft.com/en-us/azure/healthcare-apis/register-public-azure-ad-client-app) or [Service](https://docs.microsoft.com/en-us/azure/healthcare-apis/register-service-azure-ad-client-app) client.
+- [Add app roles in your application and receive them in the token](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-add-app-roles-in-azure-ad-apps)
 
 
 ## Step 1: Define Your Environment
@@ -33,7 +44,6 @@ This sample has been created to enable edge-based scenarios for running FHIR Ser
     |ASPNETCORE_Kestrel__Certificates__Default__Password| Password required to use your certificate|
 
 
-- To configure authentication, you can find our guide [here]()
 
 - For HTTPS connectivity, you will need to provide a certificate
     - You will need to [add a share](https://docs.microsoft.com/en-us/azure/databox-online/azure-stack-edge-deploy-add-shares) to the following path: `/https`    
@@ -58,7 +68,7 @@ After specifying your environment, you will need to deploy to your Azure Stack E
 1. Select "Generate IoT Edge Deployment Manifest"
     ![Generate Deployment Manifest](./images/generate_manifest.png)
 
-1. Navigate to the config folder where the deployment manifest was saved.
+1. Navigate to the config folder where the deployment manifest was saved
 
 1. Right-click on your template and select "Create Deployment for Single Device"
     ![Single Device Deployment](./images/single_device_deployment.png)
